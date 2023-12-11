@@ -4,12 +4,12 @@ import com.example.bostatask.homeScreen.model.user.Address
 import com.example.bostatask.homeScreen.model.user.Company
 
 data class User(
-    val address: Address,
-    val company: Company,
-    val email: String,
-    val id: Int,
-    val name: String,
-    val phone: String,
-    val username: String,
-    val website: String
+    val address: Address?=null,
+    val company: Company?=null,
+    val email: String?=null,
+    val id: Int?=null,
+    val name: String?=null,
+    val phone: String?=null,
+    val username: String?=null,
+    val website: String?=null
 )
