@@ -8,18 +8,20 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bostatask.R
 import com.example.bostatask.databinding.FragmentHomeBinding
 import com.example.bostatask.detailsScreen.DetailsScreenViewModel
 import com.example.bostatask.homeScreen.HomeViewModel
+import com.example.bostatask.homeScreen.model.album.AlbumsItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),OnAlbumClick{
     private lateinit var homeBinding: FragmentHomeBinding
     private val homeViewModel : HomeViewModel by viewModels()
     private val detailsViewModel : DetailsScreenViewModel by viewModels()
@@ -35,7 +37,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         homeBinding = FragmentHomeBinding.inflate(inflater)
-        albumsAdapter = AlbumsAdapter(listOf())
+        albumsAdapter = AlbumsAdapter(listOf(),this)
         return homeBinding.root
     }
 
@@ -60,6 +62,11 @@ class HomeFragment : Fragment() {
                albumsAdapter.updateList(it)
            }
        }
+    }
+
+    override fun showAlbumDetails(album: AlbumsItem) {
+     val action = HomeFragmentDirections.fromHomeToDetails(album.id)
+        findNavController().navigate(action)
     }
 
 }
