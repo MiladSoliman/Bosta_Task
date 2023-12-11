@@ -15,6 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeViewModel.getUser(1)
-        detailsViewModel.getPhotos()
+        detailsViewModel.getPhotos(1)
     }
 }

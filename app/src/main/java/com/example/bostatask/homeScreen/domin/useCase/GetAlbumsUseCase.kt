@@ -5,7 +5,7 @@ import com.example.bostatask.homeScreen.model.album.Albums
 import javax.inject.Inject
 
 class GetAlbumsUseCase @Inject constructor(private val repo: AlbumsRepo) {
-    suspend fun execute() : Albums {
-        return repo.getAlbums()
+    suspend fun execute(userId:Int) : Albums {
+        return repo.getAlbums(userId)
     }
 }

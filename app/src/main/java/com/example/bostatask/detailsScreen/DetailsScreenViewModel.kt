@@ -14,9 +14,9 @@ class DetailsScreenViewModel @Inject constructor(
 ) :ViewModel() {
 
 
-    fun getPhotos(){
+    fun getPhotos(albumId:Int){
         viewModelScope.launch {
-            Log.i("HomeViewModel",getAlbumsPhotosUseCase.execute().toString())
+            Log.i("HomeViewModel",getAlbumsPhotosUseCase.execute(albumId).size.toString())
         }
     }
 }

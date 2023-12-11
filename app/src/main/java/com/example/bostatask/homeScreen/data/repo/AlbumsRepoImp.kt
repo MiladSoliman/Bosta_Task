@@ -6,7 +6,7 @@ import com.example.bostatask.homeScreen.model.album.Albums
 import javax.inject.Inject
 
 class AlbumsRepoImp @Inject constructor(private val remote: AlbumsRemoteDataSource) : AlbumsRepo {
-    override suspend fun getAlbums(): Albums {
-        return remote.getAlbums()
+    override suspend fun getAlbums(userId:Int): Albums {
+        return remote.getAlbums(userId)
     }
 }

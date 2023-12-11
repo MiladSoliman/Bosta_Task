@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     fun getUser(userId:Int){
         viewModelScope.launch(coroutineExceptionHandler) {
            Log.i("HomeViewModelUser",getUsersUseCase.execute(userId).toString() )
-            Log.i("HomeViewModelAlbums", getAlbumsUseCase.execute().toString())
+            Log.i("HomeViewModelAlbums", getAlbumsUseCase.execute(userId).size.toString())
         }
     }
 }

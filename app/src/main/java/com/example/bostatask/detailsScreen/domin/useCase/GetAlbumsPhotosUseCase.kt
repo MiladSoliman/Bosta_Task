@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAlbumsPhotosUseCase @Inject constructor(private val repo : AlbumPhotosRepo) {
 
 
-    suspend fun execute() : Photos {
-        return repo.getAlbumPhotos()
+    suspend fun execute(albumId:Int) : Photos {
+        return repo.getAlbumPhotos(albumId)
     }
 }

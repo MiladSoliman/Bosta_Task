@@ -5,6 +5,7 @@ import com.example.bostatask.homeScreen.model.album.Albums
 import com.example.bostatask.homeScreen.model.user.User
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HomeApiService {
 
@@ -12,5 +13,5 @@ interface HomeApiService {
     suspend fun getUsers(@Path("userId") userId:Int) : User
 
     @GET("albums")
-    suspend fun getAlbums(): Albums
+    suspend fun getAlbums(@Query("userId") userId: Int): Albums
 }

@@ -7,5 +7,5 @@ import retrofit2.http.Query
 interface DetailsScreenApi {
 
     @GET("photos")
-    suspend fun getPhotosOfAlbum(@Query("albumId") albumId : Int = 1) : Photos
+    suspend fun getPhotosOfAlbum(@Query("albumId") albumId : Int) : Photos
 }
