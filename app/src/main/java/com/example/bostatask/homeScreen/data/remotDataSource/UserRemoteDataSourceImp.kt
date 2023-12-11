@@ -1,8 +1,7 @@
 package com.example.bostatask.homeScreen.data.remotDataSource
 
-import android.util.Log
 import com.example.bostatask.homeScreen.data.retrofit.HomeApiService
-import com.example.bostatask.homeScreen.model.User
+import com.example.bostatask.homeScreen.model.user.User
 import javax.inject.Inject
 
 class UserRemoteDataSourceImp @Inject constructor(private val service : HomeApiService) : UserRemoteDataSource {

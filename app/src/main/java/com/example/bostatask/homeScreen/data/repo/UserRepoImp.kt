@@ -2,7 +2,7 @@ package com.example.bostatask.homeScreen.data.repo
 
 import com.example.bostatask.homeScreen.data.remotDataSource.UserRemoteDataSource
 import com.example.bostatask.homeScreen.domin.repo.UsersRepo
-import com.example.bostatask.homeScreen.model.User
+import com.example.bostatask.homeScreen.model.user.User
 import javax.inject.Inject
 
 class UserRepoImp @Inject constructor(private val remote: UserRemoteDataSource) : UsersRepo {

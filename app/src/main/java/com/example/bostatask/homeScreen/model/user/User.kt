@@ -1,4 +1,7 @@
-package com.example.bostatask.homeScreen.model
+package com.example.bostatask.homeScreen.model.user
+
+import com.example.bostatask.homeScreen.model.user.Address
+import com.example.bostatask.homeScreen.model.user.Company
 
 data class User(
     val address: Address,

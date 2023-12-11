@@ -1,9 +1,13 @@
 package com.example.bostatask.homeScreen.di
 
+import com.example.bostatask.homeScreen.data.remotDataSource.AlbumsRemoteDataSource
+import com.example.bostatask.homeScreen.data.remotDataSource.AlbumsRemoteDataSourceImp
 import com.example.bostatask.homeScreen.data.remotDataSource.UserRemoteDataSource
 import com.example.bostatask.homeScreen.data.remotDataSource.UserRemoteDataSourceImp
+import com.example.bostatask.homeScreen.data.repo.AlbumsRepoImp
 import com.example.bostatask.homeScreen.data.repo.UserRepoImp
 import com.example.bostatask.homeScreen.data.retrofit.HomeApiService
+import com.example.bostatask.homeScreen.domin.repo.AlbumsRepo
 import com.example.bostatask.homeScreen.domin.repo.UsersRepo
 import dagger.Binds
 import dagger.Module
@@ -24,6 +28,15 @@ abstract class UsersModule {
     @ViewModelScoped
     @Binds
     abstract fun bindUserRepo(userRepoImp: UserRepoImp): UsersRepo
+
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindAlbumsRemoteDataSource(albumRemoteDataSourceImp: AlbumsRemoteDataSourceImp): AlbumsRemoteDataSource
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindAlbumRepo(albumRepoImp: AlbumsRepoImp): AlbumsRepo
 
     companion object {
         @ViewModelScoped

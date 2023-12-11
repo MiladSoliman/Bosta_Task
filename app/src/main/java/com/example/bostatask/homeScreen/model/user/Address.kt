@@ -1,4 +1,4 @@
-package com.example.bostatask.homeScreen.model
+package com.example.bostatask.homeScreen.model.user
 
 data class Address(
     val city: String,

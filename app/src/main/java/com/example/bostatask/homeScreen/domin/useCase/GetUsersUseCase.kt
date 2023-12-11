@@ -1,7 +1,7 @@
 package com.example.bostatask.homeScreen.domin.useCase
 
 import com.example.bostatask.homeScreen.domin.repo.UsersRepo
-import com.example.bostatask.homeScreen.model.User
+import com.example.bostatask.homeScreen.model.user.User
 import javax.inject.Inject
 
 class GetUsersUseCase @Inject constructor(private val repo : UsersRepo){
