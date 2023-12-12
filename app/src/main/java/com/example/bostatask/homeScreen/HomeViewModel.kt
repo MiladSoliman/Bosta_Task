@@ -3,6 +3,7 @@ package com.example.bostatask.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bostatask.common.network.ApiState
 import com.example.bostatask.homeScreen.domin.useCase.GetAlbumsUseCase
 import com.example.bostatask.homeScreen.domin.useCase.GetUsersUseCase
 import com.example.bostatask.homeScreen.model.album.Albums
@@ -23,24 +24,33 @@ class HomeViewModel @Inject constructor(
         throwable.printStackTrace()
     }
 
-    private val _userDetails: MutableStateFlow<User> = MutableStateFlow(User())
+    private val _userDetails: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)
     val userDetails = _userDetails
 
-    private val _albumsData : MutableStateFlow<Albums> = MutableStateFlow(Albums())
+    private val _albumsData : MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)
      val albumsData = _albumsData
 
     fun getUser(userId:Int){
         viewModelScope.launch(coroutineExceptionHandler) {
-            _userDetails.value = getUsersUseCase.execute(userId)
-           Log.i("HomeViewModelUser",getUsersUseCase.execute(userId).phone.toString() )
+            try {
+                _userDetails.value = ApiState.Success(getUsersUseCase.execute(userId))
+                Log.i("HomeViewModelUser",getUsersUseCase.execute(userId).phone.toString() )
+            }catch (e:Exception){
+                _userDetails.value = ApiState.Failure(e)
+            }
 
         }
     }
 
     fun getAlbums(userId: Int){
         viewModelScope.launch(coroutineExceptionHandler){
-            _albumsData.value = getAlbumsUseCase.execute(userId)
-            Log.i("HomeViewModelAlbums", getAlbumsUseCase.execute(userId).size.toString())
+            try {
+                _albumsData.value = ApiState.Success(getAlbumsUseCase.execute(userId))
+                Log.i("HomeViewModelAlbums", getAlbumsUseCase.execute(userId).size.toString())
+            }catch (e:Exception){
+                _albumsData.value = ApiState.Failure(e)
+            }
+
         }
     }
 }

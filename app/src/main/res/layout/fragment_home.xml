@@ -29,9 +29,28 @@
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:visibility="invisible"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtHeader"
         app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/nameShimmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/txtHeader"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:background="@color/shimmerColor"
+            >
+
+        </TextView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <TextView
         android:id="@+id/txtUserAddress"
@@ -42,8 +61,28 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/txtuserName"
         app:layout_constraintTop_toBottomOf="@+id/txtuserName" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/AddressShimmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/txtuserName"
+        app:layout_constraintTop_toBottomOf="@+id/txtuserName"
+        >
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:background="@color/shimmerColor"
+            >
+
+        </TextView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
     <TextView
         android:id="@+id/txtUserPhone"
@@ -54,8 +93,29 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/txtUserAddress"
         app:layout_constraintTop_toBottomOf="@+id/txtUserAddress" />
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/zipCodeShimmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/txtUserAddress"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserAddress">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:background="@color/shimmerColor">
+
+        </TextView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
     <TextView
         android:id="@+id/txtMyAlbumes"
@@ -64,10 +124,75 @@
         android:layout_marginTop="16dp"
         android:text="My Albums"
         android:textSize="25sp"
+        android:visibility="invisible"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtUserPhone"
         app:layout_constraintTop_toBottomOf="@+id/txtUserPhone" />
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/myAlbumsShimmer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/txtUserPhone"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserPhone"
+        >
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:background="@color/shimmerColor"
+            >
+
+        </TextView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/rvShimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMyAlbumes">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+            <include layout="@layout/album_item_shimmer" />
+
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -77,10 +202,12 @@
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtMyAlbumes"
         tools:listitem="@layout/album_item" />
+
 
 
 
