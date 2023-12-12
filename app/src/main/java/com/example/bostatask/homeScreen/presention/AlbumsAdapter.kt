@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bostatask.databinding.AlbumItemBinding
 import com.example.bostatask.homeScreen.model.album.AlbumsItem
 
-class AlbumsAdapter(private var albumsList : List<AlbumsItem> , val onAlbumClick: OnAlbumClick) : RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder>() {
+class AlbumsAdapter(private var albumsList : List<AlbumsItem> , private val onAlbumClick: OnAlbumClick) : RecyclerView.Adapter<AlbumsAdapter.AlbumsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumsViewHolder {
         val binding = AlbumItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
