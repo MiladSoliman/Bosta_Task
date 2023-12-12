@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(),OnAlbumClick{
     private lateinit var homeBinding: FragmentHomeBinding
     private val homeViewModel : HomeViewModel by viewModels()
-    private val detailsViewModel : DetailsScreenViewModel by viewModels()
     private lateinit var albumsAdapter: AlbumsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +48,7 @@ class HomeFragment : Fragment(),OnAlbumClick{
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getUser(1)
         homeViewModel.getAlbums(1)
-        detailsViewModel.getPhotos(1)
+
 
         homeBinding.albumsRV.layoutManager = LinearLayoutManager(requireContext())
         homeBinding.albumsRV.adapter = albumsAdapter
@@ -60,7 +59,7 @@ class HomeFragment : Fragment(),OnAlbumClick{
     }
 
     override fun showAlbumDetails(album: AlbumsItem) {
-        val action = HomeFragmentDirections.fromHomeToDetails(album.id)
+        val action = HomeFragmentDirections.fromHomeToDetails(album.id , album.title)
         findNavController().navigate(action)
     }
 

@@ -16,7 +16,7 @@ class DetailsScreenViewModel @Inject constructor(
 
     fun getPhotos(albumId:Int){
         viewModelScope.launch {
-            Log.i("HomeViewModel",getAlbumsPhotosUseCase.execute(albumId).size.toString())
+            Log.i("DetailsViewModel",getAlbumsPhotosUseCase.execute(albumId).size.toString() + albumId)
         }
     }
 }
