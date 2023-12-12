@@ -1,6 +1,8 @@
 package com.example.bostatask.detailsScreen.presention
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import com.example.bostatask.common.network.ApiState
 import com.example.bostatask.databinding.FragmentDetailsBinding
 import com.example.bostatask.detailsScreen.DetailsScreenViewModel
 import com.example.bostatask.detailsScreen.model.Photos
+import com.example.bostatask.detailsScreen.model.PhotosItem
 import com.example.bostatask.homeScreen.presention.AlbumsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -29,7 +32,7 @@ class DetailsFragment : Fragment() {
     private var albumId = 0
     private lateinit var albumName :String
     private lateinit var photosAdapter: PhotosAdapter
-
+    private lateinit var photosList : List<PhotosItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -48,9 +51,15 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       detailsViewModel.getPhotos(albumId)
         binding.textAlbumName.text = albumName
         binding.photosRv.adapter = photosAdapter
+        observeOnPhotosList()
+        detailsViewModel.getPhotos(albumId)
+        searchInImages()
+    }
+
+
+    private fun observeOnPhotosList(){
         lifecycleScope.launch {
             detailsViewModel.photosList.collect{ result->
                 when(result){
@@ -59,8 +68,10 @@ class DetailsFragment : Fragment() {
                     }
                     is ApiState.Success<*> -> {
                         Log.i("DetailsScreen","Success")
-                        val photosList = result.data as Photos
-                       photosAdapter.updateList(photosList)
+                        binding.photosShimmer.visibility = View.GONE
+                        binding.photosRv.visibility = View.VISIBLE
+                        photosList = result.data as Photos
+                        photosAdapter.updateList(photosList)
                     }
                     else -> {
                         Log.i("DetailsScreen","Error....")
@@ -69,5 +80,52 @@ class DetailsFragment : Fragment() {
             }
         }
     }
+
+    private fun searchInImages(){
+        binding.imagesSearch.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    filterImages(s.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+    }
+
+    private fun filterImages(name:String){
+        val searchedImages = mutableListOf<PhotosItem>()
+        for (photo in photosList) {
+            if (photo.title.lowercase().contains(name.lowercase())) {
+                searchedImages.add(photo)
+                Log.i("HomeScreen","in search")
+            }
+
+        }
+        photosAdapter.updateList(searchedImages)
+    }
+
+    /*
+        fun filterBrands(text: String) {
+        var filterdBrands = mutableListOf<SmartCollection>()
+        for (brand in smartCollections) {
+            if (brand.title.lowercase().contains(text.lowercase())) {
+                filterdBrands.add(brand)
+            }
+
+        }
+        brandsAdapter.setBrandsList(filterdBrands)
+        if (filterdBrands.isEmpty()) {
+            homeBinding.tbNoBrands.visibility = View.VISIBLE
+            }else{
+            homeBinding.tbNoBrands.visibility = View.GONE
+
+        }
+
+    }
+     */
 
 }
