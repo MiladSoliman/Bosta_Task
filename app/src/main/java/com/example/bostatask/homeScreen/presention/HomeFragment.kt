@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bostatask.R
 import com.example.bostatask.common.network.ApiState
+import com.example.bostatask.common.util.Constants
 import com.example.bostatask.databinding.FragmentHomeBinding
 import com.example.bostatask.detailsScreen.DetailsScreenViewModel
 import com.example.bostatask.homeScreen.HomeViewModel
@@ -25,11 +26,11 @@ import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(),OnAlbumClick{
+class HomeFragment : Fragment(), OnAlbumClick {
     private lateinit var homeBinding: FragmentHomeBinding
-    private val homeViewModel : HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var albumsAdapter: AlbumsAdapter
-
+    private var userId = Constants.getRandomUserId()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,14 +41,15 @@ class HomeFragment : Fragment(),OnAlbumClick{
     ): View? {
         // Inflate the layout for this fragment
         homeBinding = FragmentHomeBinding.inflate(inflater)
-        albumsAdapter = AlbumsAdapter(listOf(),this)
+        albumsAdapter = AlbumsAdapter(listOf(), this)
+
         return homeBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.getUser(1)
-        homeViewModel.getAlbums(1)
+        homeViewModel.getUser(userId)
+        homeViewModel.getAlbums(userId)
 
 
         homeBinding.albumsRV.layoutManager = LinearLayoutManager(requireContext())
@@ -59,27 +61,30 @@ class HomeFragment : Fragment(),OnAlbumClick{
     }
 
     override fun showAlbumDetails(album: AlbumsItem) {
-        val action = HomeFragmentDirections.fromHomeToDetails(album.id , album.title)
+        val action = HomeFragmentDirections.fromHomeToDetails(album.id, album.title)
         findNavController().navigate(action)
     }
 
 
-    private fun observeOnUserResult(){
+    private fun observeOnUserResult() {
         lifecycleScope.launch {
             homeViewModel.userDetails.collect {
-                when(it){
+                when (it) {
                     is ApiState.Loading -> {
-                        Log.i("HomeScreen","Loading")
+                        Log.i("HomeScreen", "Loading")
                     }
+
                     is ApiState.Success<*> -> {
                         hideUserShimmerAndShowUserData()
                         val user = it.data as User
                         homeBinding.txtuserName.text = user.name
-                        homeBinding.txtUserAddress.text =  user.address?.street + ","+user.address?.suite +","+ user.address?.city+","
+                        homeBinding.txtUserAddress.text =
+                            user.address?.street + "," + user.address?.suite + "," + user.address?.city + ","
                         homeBinding.txtUserPhone.text = user.address?.zipcode
                     }
-                    else ->{
-                        Log.i("HomeScreen","Error")
+
+                    else -> {
+                        Log.i("HomeScreen", "Error")
                         showErrorSplash()
                     }
                 }
@@ -87,20 +92,22 @@ class HomeFragment : Fragment(),OnAlbumClick{
         }
     }
 
-    private fun observeOnAlbumsResult(){
+    private fun observeOnAlbumsResult() {
         lifecycleScope.launch {
-            homeViewModel.albumsData.collect{
-                when(it) {
+            homeViewModel.albumsData.collect {
+                when (it) {
                     is ApiState.Loading -> {
-                        Log.i("HomeScreen","LoadingAlbums")
+                        Log.i("HomeScreen", "LoadingAlbums")
                     }
+
                     is ApiState.Success<*> -> {
                         hideShimmerAndAlbumsRecycler()
                         val albumsList = it.data as Albums
                         albumsAdapter.updateList(albumsList)
                     }
+
                     is ApiState.Failure -> {
-                        Log.i("HomeScreen","ErrorAlbums")
+                        Log.i("HomeScreen", "ErrorAlbums")
                         showErrorSplash()
                     }
 
@@ -110,29 +117,29 @@ class HomeFragment : Fragment(),OnAlbumClick{
         }
     }
 
-    private fun hideShimmerAndAlbumsRecycler(){
+    private fun hideShimmerAndAlbumsRecycler() {
         homeBinding.rvShimmer.visibility = View.GONE
         homeBinding.albumsRV.visibility = View.VISIBLE
         homeBinding.myAlbumsShimmer.visibility = View.GONE
         homeBinding.txtMyAlbumes.visibility = View.VISIBLE
     }
 
-    private fun hideUserShimmerAndShowUserData(){
-         homeBinding.nameShimmer.visibility = View.GONE
+    private fun hideUserShimmerAndShowUserData() {
+        homeBinding.nameShimmer.visibility = View.GONE
         homeBinding.zipCodeShimmer.visibility = View.GONE
         homeBinding.AddressShimmer.visibility = View.GONE
         homeBinding.txtuserName.visibility = View.VISIBLE
-        homeBinding.txtUserAddress.visibility =View.VISIBLE
+        homeBinding.txtUserAddress.visibility = View.VISIBLE
         homeBinding.txtUserPhone.visibility = View.VISIBLE
     }
 
 
-    private fun showErrorSplash(){
+    private fun showErrorSplash() {
         homeBinding.nameShimmer.visibility = View.GONE
         homeBinding.zipCodeShimmer.visibility = View.GONE
         homeBinding.AddressShimmer.visibility = View.GONE
         homeBinding.txtuserName.visibility = View.GONE
-        homeBinding.txtUserAddress.visibility =View.GONE
+        homeBinding.txtUserAddress.visibility = View.GONE
         homeBinding.txtUserPhone.visibility = View.GONE
         homeBinding.rvShimmer.visibility = View.GONE
         homeBinding.albumsRV.visibility = View.GONE
