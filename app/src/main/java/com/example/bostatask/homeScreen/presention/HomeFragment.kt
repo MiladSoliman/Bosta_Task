@@ -80,6 +80,7 @@ class HomeFragment : Fragment(),OnAlbumClick{
                     }
                     else ->{
                         Log.i("HomeScreen","Error")
+                        showErrorSplash()
                     }
                 }
             }
@@ -100,6 +101,7 @@ class HomeFragment : Fragment(),OnAlbumClick{
                     }
                     is ApiState.Failure -> {
                         Log.i("HomeScreen","ErrorAlbums")
+                        showErrorSplash()
                     }
 
                 }
@@ -122,5 +124,20 @@ class HomeFragment : Fragment(),OnAlbumClick{
         homeBinding.txtuserName.visibility = View.VISIBLE
         homeBinding.txtUserAddress.visibility =View.VISIBLE
         homeBinding.txtUserPhone.visibility = View.VISIBLE
+    }
+
+
+    private fun showErrorSplash(){
+        homeBinding.nameShimmer.visibility = View.GONE
+        homeBinding.zipCodeShimmer.visibility = View.GONE
+        homeBinding.AddressShimmer.visibility = View.GONE
+        homeBinding.txtuserName.visibility = View.GONE
+        homeBinding.txtUserAddress.visibility =View.GONE
+        homeBinding.txtUserPhone.visibility = View.GONE
+        homeBinding.rvShimmer.visibility = View.GONE
+        homeBinding.albumsRV.visibility = View.GONE
+        homeBinding.myAlbumsShimmer.visibility = View.GONE
+        homeBinding.txtMyAlbumes.visibility = View.GONE
+        homeBinding.homeErrorSplash.visibility = View.VISIBLE
     }
 }

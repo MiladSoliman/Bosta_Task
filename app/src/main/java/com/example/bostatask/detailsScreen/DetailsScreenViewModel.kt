@@ -18,6 +18,7 @@ class DetailsScreenViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
+        _photosList.value = ApiState.Failure(throwable)
     }
 
     private var _photosList : MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)

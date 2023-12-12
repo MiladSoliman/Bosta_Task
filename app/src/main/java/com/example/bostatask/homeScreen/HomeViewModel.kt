@@ -22,6 +22,8 @@ class HomeViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
+        _userDetails.value = ApiState.Failure(throwable)
+        _albumsData.value = ApiState.Failure(throwable)
     }
 
     private val _userDetails: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)

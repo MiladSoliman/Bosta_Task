@@ -68,6 +68,7 @@ class DetailsFragment : Fragment() {
                     }
                     is ApiState.Success<*> -> {
                         Log.i("DetailsScreen","Success")
+                        binding.imagesSearch.visibility = View.VISIBLE
                         binding.photosShimmer.visibility = View.GONE
                         binding.photosRv.visibility = View.VISIBLE
                         photosList = result.data as Photos
@@ -75,10 +76,18 @@ class DetailsFragment : Fragment() {
                     }
                     else -> {
                         Log.i("DetailsScreen","Error....")
+                        showErrorSplash()
                     }
                 }
             }
         }
+    }
+
+    private fun showErrorSplash() {
+        binding.photosShimmer.visibility = View.GONE
+        binding.errorSplash.visibility = View.VISIBLE
+        binding.textAlbumName.visibility = View.GONE
+        binding.imagesSearch.visibility = View.GONE
     }
 
     private fun searchInImages(){
@@ -106,26 +115,13 @@ class DetailsFragment : Fragment() {
 
         }
         photosAdapter.updateList(searchedImages)
+        if (searchedImages.isEmpty()){
+            binding.noImagesSplash.visibility = View.VISIBLE
+        }else{
+            binding.noImagesSplash.visibility = View.GONE
+        }
     }
 
-    /*
-        fun filterBrands(text: String) {
-        var filterdBrands = mutableListOf<SmartCollection>()
-        for (brand in smartCollections) {
-            if (brand.title.lowercase().contains(text.lowercase())) {
-                filterdBrands.add(brand)
-            }
 
-        }
-        brandsAdapter.setBrandsList(filterdBrands)
-        if (filterdBrands.isEmpty()) {
-            homeBinding.tbNoBrands.visibility = View.VISIBLE
-            }else{
-            homeBinding.tbNoBrands.visibility = View.GONE
-
-        }
-
-    }
-     */
 
 }
