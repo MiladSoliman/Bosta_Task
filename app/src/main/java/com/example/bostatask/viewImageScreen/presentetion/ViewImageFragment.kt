@@ -1,5 +1,7 @@
 package com.example.bostatask.viewImageScreen.presentetion
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.bostatask.R
 import com.example.bostatask.common.network.ApiState
 import com.example.bostatask.common.util.shareImageUrl
@@ -18,6 +23,7 @@ import com.example.bostatask.viewImageScreen.ImageScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import com.bumptech.glide.request.transition.Transition
 
 @AndroidEntryPoint
 class ViewImageFragment : Fragment() {
@@ -84,9 +90,23 @@ class ViewImageFragment : Fragment() {
     }
 
     private fun setSelectedImage(image: PhotosItem) {
-        Glide.with(binding.root).load(image.url)
+       /* Glide.with(binding.root).load(image.url)
             .placeholder(R.drawable.placholder)
-            .into(binding.imageView)
+            .into(binding.imageView)*/
+     /*   val uri = Uri.parse(image.url)
+        binding.imageView.setImage(ImageSource.uri(uri))*/
+
+   /*  binding.imageView.setImage(ImageSource.uri(image.url))*/
+
+        Glide.with(this)
+            .asBitmap()
+            .load(image.url)
+            .apply(RequestOptions().fitCenter())
+            .into(object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                   binding.imageView.setImage(ImageSource.bitmap(resource))
+                }
+            })
     }
 
 

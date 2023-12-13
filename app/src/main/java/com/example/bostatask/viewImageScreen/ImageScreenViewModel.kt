@@ -15,6 +15,7 @@ class ImageScreenViewModel @Inject constructor(private val getImageUseCase: GetI
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
+        _imageData.value = ApiState.Failure(throwable)
     }
 
     private val _imageData: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Loading)
@@ -22,7 +23,7 @@ class ImageScreenViewModel @Inject constructor(private val getImageUseCase: GetI
 
 
      fun getSelectedImage(albumId:Int,imageId:Int) {
-         viewModelScope.launch {
+         viewModelScope.launch(coroutineExceptionHandler) {
              try {
                  Log.i("ImageScreenViewModel", getImageUseCase.execute(albumId, imageId).title)
                  _imageData.value = ApiState.Success(getImageUseCase.execute(albumId,imageId))

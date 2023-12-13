@@ -92,6 +92,9 @@ dependencies {
 
     //shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+    // image zoom
+    implementation ("com.davemorrissey.labs:subsampling-scale-image-view:3.10.0")
 }
 
 kapt {
