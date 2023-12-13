@@ -25,5 +25,12 @@
         <argument
             android:name="albumName"
             app:argType="string" />
+        <action
+            android:id="@+id/fromDetailsToImageScreen"
+            app:destination="@id/viewImageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/viewImageFragment"
+        android:name="com.example.bostatask.viewImageScreen.presentetion.ViewImageFragment"
+        android:label="ViewImageFragment" />
 </navigation>

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LOGGER
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnClickToShowImage {
     private lateinit var binding : FragmentDetailsBinding
     private val detailsViewModel : DetailsScreenViewModel by viewModels()
     private var albumId = 0
@@ -45,7 +46,7 @@ class DetailsFragment : Fragment() {
         binding = FragmentDetailsBinding.inflate(inflater)
         albumId = requireArguments().getInt("albumId")
         albumName = requireArguments().getString("albumName").toString()
-        photosAdapter = PhotosAdapter(emptyList())
+        photosAdapter = PhotosAdapter(emptyList(),this)
         return binding.root
     }
 
@@ -122,6 +123,10 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    override fun showImage(photosItem: PhotosItem) {
+        val action = DetailsFragmentDirections.fromDetailsToImageScreen()
+        findNavController().navigate(action)
+    }
 
 
 }

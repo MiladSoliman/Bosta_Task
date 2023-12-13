@@ -8,7 +8,7 @@ import com.example.bostatask.R
 import com.example.bostatask.databinding.PhotoItemBinding
 import com.example.bostatask.detailsScreen.model.PhotosItem
 
-class PhotosAdapter(private var photosList: List<PhotosItem>) :
+class PhotosAdapter(private var photosList: List<PhotosItem>, private val onClickToShowImage: OnClickToShowImage) :
     RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {
@@ -25,6 +25,9 @@ class PhotosAdapter(private var photosList: List<PhotosItem>) :
             .placeholder(R.drawable.placholder)
             .into(holder.binding.photoImg)
 
+        holder.binding.photoImg.setOnClickListener {
+            onClickToShowImage.showImage(photosList[position])
+        }
 
     }
 
