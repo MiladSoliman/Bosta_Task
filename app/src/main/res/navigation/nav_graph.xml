@@ -32,5 +32,12 @@
     <fragment
         android:id="@+id/viewImageFragment"
         android:name="com.example.bostatask.viewImageScreen.presentetion.ViewImageFragment"
-        android:label="ViewImageFragment" />
+        android:label="ViewImageFragment" >
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+        <argument
+            android:name="imageId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

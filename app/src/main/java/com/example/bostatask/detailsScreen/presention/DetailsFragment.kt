@@ -124,7 +124,7 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
     }
 
     override fun showImage(photosItem: PhotosItem) {
-        val action = DetailsFragmentDirections.fromDetailsToImageScreen()
+        val action = DetailsFragmentDirections.fromDetailsToImageScreen(photosItem.albumId,photosItem.id)
         findNavController().navigate(action)
     }
 
