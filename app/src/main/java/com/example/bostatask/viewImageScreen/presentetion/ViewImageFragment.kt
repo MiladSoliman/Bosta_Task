@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.bostatask.R
 import com.example.bostatask.common.network.ApiState
+import com.example.bostatask.common.util.shareImageUrl
 import com.example.bostatask.databinding.FragmentViewImagBinding
 import com.example.bostatask.detailsScreen.model.PhotosItem
 import com.example.bostatask.viewImageScreen.ImageScreenViewModel
@@ -48,6 +49,7 @@ class ViewImageFragment : Fragment() {
 
         binding.btnShare.setOnClickListener {
             Log.i("ImageScreen",image.url)
+            this.shareImageUrl(image)
         }
     }
 
