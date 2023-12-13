@@ -45,6 +45,10 @@ class ViewImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         imageViewModel.getSelectedImage(albumId,imageId)
         observeOnImageDataResult()
+
+        binding.btnShare.setOnClickListener {
+            Log.i("ImageScreen",image.url)
+        }
     }
 
 
@@ -53,22 +57,31 @@ class ViewImageFragment : Fragment() {
             imageViewModel.imageData.collect{
                 when(it){
                     is ApiState.Loading -> {
-                        Log.i("imageScreen","Loading.....")
+                        binding.imageShimmer.visibility = View.VISIBLE
+                        binding.btnShare.visibility = View.GONE
                     }
                     is ApiState.Success<*> -> {
-                        Log.i("imageScreen","Error")
+                        binding.imageShimmer.visibility = View.GONE
+                        binding.btnShare.visibility = View.VISIBLE
                        image = it.data as PhotosItem
-                        setImage(image)
+                        setSelectedImage(image)
                     }
                     else -> {
                         Log.i("imageScreen","Error")
+                        showErrorSplash()
                     }
                 }
             }
         }
     }
 
-    private fun setImage(image: PhotosItem) {
+    private fun showErrorSplash() {
+        binding.imageShimmer.visibility = View.VISIBLE
+        binding.imageScreenErrorSplash.visibility = View.VISIBLE
+        binding.btnShare.visibility =View.GONE
+    }
+
+    private fun setSelectedImage(image: PhotosItem) {
         Glide.with(binding.root).load(image.url)
             .placeholder(R.drawable.placholder)
             .into(binding.imageView)
