@@ -2,29 +2,29 @@ package com.example.bostatask.homeScreen.presention
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bostatask.R
 import com.example.bostatask.common.network.ApiState
 import com.example.bostatask.common.util.Constants
 import com.example.bostatask.databinding.FragmentHomeBinding
-import com.example.bostatask.detailsScreen.DetailsScreenViewModel
 import com.example.bostatask.homeScreen.HomeViewModel
 import com.example.bostatask.homeScreen.model.album.Albums
 import com.example.bostatask.homeScreen.model.album.AlbumsItem
 import com.example.bostatask.homeScreen.model.user.User
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 
+/**
+ *** Home Fragment that responsible for observing on user data and his albums list
+ **  Display the user data and his album in recycler view when the app is started
+ *** @implement OnAlbumClick interface to get selected album from albums adapter and navigate to details screen
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment(), OnAlbumClick {
     private lateinit var homeBinding: FragmentHomeBinding
@@ -50,22 +50,24 @@ class HomeFragment : Fragment(), OnAlbumClick {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getUser(userId)
         homeViewModel.getAlbums(userId)
-
-
         homeBinding.albumsRV.layoutManager = LinearLayoutManager(requireContext())
         homeBinding.albumsRV.adapter = albumsAdapter
         observeOnUserResult()
         observeOnAlbumsResult()
-
-
     }
 
+    /**
+     * navigate to album details screen
+     */
     override fun showAlbumDetails(album: AlbumsItem) {
         val action = HomeFragmentDirections.fromHomeToDetails(album.id, album.title)
         findNavController().navigate(action)
     }
 
 
+    /**
+     * observe on user data and display it when the call is successful
+     */
     private fun observeOnUserResult() {
         lifecycleScope.launch {
             homeViewModel.userDetails.collect {
@@ -92,6 +94,9 @@ class HomeFragment : Fragment(), OnAlbumClick {
         }
     }
 
+    /**
+     * observe on user albums and display it when the call is successful
+     */
     private fun observeOnAlbumsResult() {
         lifecycleScope.launch {
             homeViewModel.albumsData.collect {
@@ -117,6 +122,9 @@ class HomeFragment : Fragment(), OnAlbumClick {
         }
     }
 
+    /**
+     * hide shimmer loading effect when data is ready to show
+     */
     private fun hideShimmerAndAlbumsRecycler() {
         homeBinding.rvShimmer.visibility = View.GONE
         homeBinding.albumsRV.visibility = View.VISIBLE
@@ -133,7 +141,9 @@ class HomeFragment : Fragment(), OnAlbumClick {
         homeBinding.txtUserPhone.visibility = View.VISIBLE
     }
 
-
+    /**
+     * show error splash if the api call was fail
+     */
     private fun showErrorSplash() {
         homeBinding.nameShimmer.visibility = View.GONE
         homeBinding.zipCodeShimmer.visibility = View.GONE

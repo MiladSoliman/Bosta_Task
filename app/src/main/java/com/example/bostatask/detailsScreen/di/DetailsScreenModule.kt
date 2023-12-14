@@ -5,11 +5,6 @@ import com.example.bostatask.detailsScreen.data.remotDataSource.AlbumPhotosRemot
 import com.example.bostatask.detailsScreen.data.repo.AlbumPhotosRepoImp
 import com.example.bostatask.detailsScreen.data.retrofit.DetailsScreenApi
 import com.example.bostatask.detailsScreen.domin.repo.AlbumPhotosRepo
-import com.example.bostatask.homeScreen.data.remotDataSource.AlbumsRemoteDataSource
-import com.example.bostatask.homeScreen.data.remotDataSource.AlbumsRemoteDataSourceImp
-import com.example.bostatask.homeScreen.data.repo.AlbumsRepoImp
-import com.example.bostatask.homeScreen.data.retrofit.HomeApiService
-import com.example.bostatask.homeScreen.domin.repo.AlbumsRepo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,6 +13,10 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 
+/**
+ ** DetailsScreenModule is abstract class that responsible for providing instances of albumPhotos remote
+ * data source,albumsPhoto repo and details api interfaces
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class DetailsScreenModule {
@@ -33,7 +32,7 @@ abstract class DetailsScreenModule {
     companion object {
         @ViewModelScoped
         @Provides
-        fun provideUserServices(retrofit: Retrofit) : DetailsScreenApi =
+        fun provideUserServices(retrofit: Retrofit): DetailsScreenApi =
             retrofit.create(DetailsScreenApi::class.java)
     }
 }

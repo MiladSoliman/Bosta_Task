@@ -1,10 +1,7 @@
 package com.example.bostatask
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import com.example.bostatask.detailsScreen.DetailsScreenViewModel
-import com.example.bostatask.homeScreen.HomeViewModel
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -13,6 +13,10 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 
+/**
+ ** ImageScreenModule is abstract class that responsible for providing instances of image remote
+ * data source,image repo and image api interfaces
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class ImageScreenModule {
@@ -26,11 +30,10 @@ abstract class ImageScreenModule {
     abstract fun bindImageRepo(imageRepoImp: ImageRepoImp): ImageRepo
 
 
-
     companion object {
         @ViewModelScoped
         @Provides
-        fun provideUserServices(retrofit: Retrofit) : ImageApi =
+        fun provideUserServices(retrofit: Retrofit): ImageApi =
             retrofit.create(ImageApi::class.java)
     }
 }

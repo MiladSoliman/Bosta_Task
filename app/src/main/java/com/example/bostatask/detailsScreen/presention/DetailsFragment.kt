@@ -4,36 +4,35 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LOGGER
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bostatask.R
 import com.example.bostatask.common.network.ApiState
 import com.example.bostatask.databinding.FragmentDetailsBinding
 import com.example.bostatask.detailsScreen.DetailsScreenViewModel
 import com.example.bostatask.detailsScreen.model.Photos
 import com.example.bostatask.detailsScreen.model.PhotosItem
-import com.example.bostatask.homeScreen.presention.AlbumsAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ *** DetailsFragment that responsible for observing on selected album photos
+ **  Display the album photos in  recycler view when the user select to specific album
+ *** @implement OnClickToShowImage interface to get selected photo from photos adapter and navigate to details screen
+ */
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(), OnClickToShowImage {
-    private lateinit var binding : FragmentDetailsBinding
-    private val detailsViewModel : DetailsScreenViewModel by viewModels()
+    private lateinit var binding: FragmentDetailsBinding
+    private val detailsViewModel: DetailsScreenViewModel by viewModels()
     private var albumId = 0
-    private lateinit var albumName :String
+    private lateinit var albumName: String
     private lateinit var photosAdapter: PhotosAdapter
-    private lateinit var photosList : List<PhotosItem>
+    private lateinit var photosList: List<PhotosItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,7 +45,7 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
         binding = FragmentDetailsBinding.inflate(inflater)
         albumId = requireArguments().getInt("albumId")
         albumName = requireArguments().getString("albumName").toString()
-        photosAdapter = PhotosAdapter(emptyList(),this)
+        photosAdapter = PhotosAdapter(emptyList(), this)
         return binding.root
     }
 
@@ -59,24 +58,28 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
         searchInImages()
     }
 
-
-    private fun observeOnPhotosList(){
+    /**
+     * observe on album photos data and display it when the api call is successful
+     */
+    private fun observeOnPhotosList() {
         lifecycleScope.launch {
-            detailsViewModel.photosList.collect{ result->
-                when(result){
+            detailsViewModel.photosList.collect { result ->
+                when (result) {
                     is ApiState.Loading -> {
-                        Log.i("DetailsScreen","Loading")
+                        Log.i("DetailsScreen", "Loading")
                     }
+
                     is ApiState.Success<*> -> {
-                        Log.i("DetailsScreen","Success")
+                        Log.i("DetailsScreen", "Success")
                         binding.imagesSearch.visibility = View.VISIBLE
                         binding.photosShimmer.visibility = View.GONE
                         binding.photosRv.visibility = View.VISIBLE
                         photosList = result.data as Photos
                         photosAdapter.updateList(photosList)
                     }
+
                     else -> {
-                        Log.i("DetailsScreen","Error....")
+                        Log.i("DetailsScreen", "Error....")
                         showErrorSplash()
                     }
                 }
@@ -84,6 +87,9 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
         }
     }
 
+    /**
+     * show error splash if the api call was fail
+     */
     private fun showErrorSplash() {
         binding.photosShimmer.visibility = View.GONE
         binding.errorSplash.visibility = View.VISIBLE
@@ -91,13 +97,16 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
         binding.imagesSearch.visibility = View.GONE
     }
 
-    private fun searchInImages(){
-        binding.imagesSearch.addTextChangedListener(object :TextWatcher{
+    /**
+     * start search in photos list
+     */
+    private fun searchInImages() {
+        binding.imagesSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    filterImages(s.toString())
+                filterImages(s.toString())
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -106,25 +115,32 @@ class DetailsFragment : Fragment(), OnClickToShowImage {
         })
     }
 
-    private fun filterImages(name:String){
+    /**
+     * filter of data when user start writing and updated the adapter whit new list
+     */
+    private fun filterImages(name: String) {
         val searchedImages = mutableListOf<PhotosItem>()
         for (photo in photosList) {
             if (photo.title.lowercase().contains(name.lowercase())) {
                 searchedImages.add(photo)
-                Log.i("HomeScreen","in search")
+                Log.i("HomeScreen", "in search")
             }
 
         }
         photosAdapter.updateList(searchedImages)
-        if (searchedImages.isEmpty()){
+        if (searchedImages.isEmpty()) {
             binding.noImagesSplash.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.noImagesSplash.visibility = View.GONE
         }
     }
 
+    /**
+     * navigate to show image screen to review selected image
+     */
     override fun showImage(photosItem: PhotosItem) {
-        val action = DetailsFragmentDirections.fromDetailsToImageScreen(photosItem.albumId,photosItem.id)
+        val action =
+            DetailsFragmentDirections.fromDetailsToImageScreen(photosItem.albumId, photosItem.id)
         findNavController().navigate(action)
     }
 

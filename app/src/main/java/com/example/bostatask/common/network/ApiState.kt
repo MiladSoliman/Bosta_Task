@@ -1,4 +1,5 @@
 package com.example.bostatask.common.network
+
 /**
  * ApiState class that provide the screen with state of response (Loading, Success and Failure)
  */

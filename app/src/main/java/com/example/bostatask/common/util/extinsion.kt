@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.bostatask.detailsScreen.model.PhotosItem
 
-fun Fragment.shareImageUrl(image:PhotosItem) {
+/**
+ * function used for sharing image url
+ */
+fun Fragment.shareImageUrl(image: PhotosItem) {
     try {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
@@ -14,6 +17,6 @@ fun Fragment.shareImageUrl(image:PhotosItem) {
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
         startActivity(Intent.createChooser(shareIntent, "choose one"))
     } catch (e: java.lang.Exception) {
-       Log.i("ShareError",e.toString())
+        Log.i("ShareError", e.toString())
     }
 }

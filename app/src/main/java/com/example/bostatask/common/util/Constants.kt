@@ -5,10 +5,12 @@ import kotlin.random.Random
 
 class Constants {
     companion object {
-        val BASE_URL = "https://jsonplaceholder.typicode.com/"
+        const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-
-        fun getRandomUserId():Int{
+        /**
+         * function to get random user id
+         */
+        fun getRandomUserId(): Int {
             return Random.nextInt(1, 11)
         }
     }

@@ -17,6 +17,10 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 
+/**
+ ** UsersModule is abstract class that responsible for providing instances of user and albums remote
+ * data,user repo and home api interfaces
+ */
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class UsersModule {
@@ -41,7 +45,7 @@ abstract class UsersModule {
     companion object {
         @ViewModelScoped
         @Provides
-        fun provideUserServices(retrofit: Retrofit) : HomeApiService =
+        fun provideUserServices(retrofit: Retrofit): HomeApiService =
             retrofit.create(HomeApiService::class.java)
     }
 }

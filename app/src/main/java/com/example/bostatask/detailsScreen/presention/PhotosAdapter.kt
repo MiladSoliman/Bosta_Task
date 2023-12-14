@@ -8,7 +8,16 @@ import com.example.bostatask.R
 import com.example.bostatask.databinding.PhotoItemBinding
 import com.example.bostatask.detailsScreen.model.PhotosItem
 
-class PhotosAdapter(private var photosList: List<PhotosItem>, private val onClickToShowImage: OnClickToShowImage) :
+/**
+ * PhotosAdapter that responsible for display selected album photos
+ * @param photosList the data should be shown
+ * @param onClickToShowImage instance of OnClickToShowImage interface to pass the selected photo to
+ * details fragment for navigation
+ */
+class PhotosAdapter(
+    private var photosList: List<PhotosItem>,
+    private val onClickToShowImage: OnClickToShowImage
+) :
     RecyclerView.Adapter<PhotosAdapter.PhotosViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {
