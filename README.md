@@ -23,7 +23,6 @@ Network Permission
 - StateFlow
 - Hilt
 - Navigation Components
-- Unit testing
 
 ## SDK Version
 34
