@@ -1,6 +1,6 @@
 # GalleryApp
 
-Android Mobile Android Application usnig Kotlin to get random user data and his album, showing album photos list and search in it, show specifice image and share it with anyone and can zooming, using design architecture MVVM.
+Android Mobile Android Application usnig Kotlin to get random user data and his album, showing album photos list and search in it, show specific image and share it with anyone and can zooming, using design architecture MVVM.
 
 ## Application Features :
 
@@ -8,7 +8,7 @@ Android Mobile Android Application usnig Kotlin to get random user data and his 
 - Search user album list
 - Select album to show it's photos
 - Search on album photos with photo name
-- Select any photo to show it in separate image viewe
+- Select any photo to show it in separate image view
 - Zooming photo as you like
 - Share photo with any one via social application
 - Handel error case with lottie animation 
@@ -18,9 +18,8 @@ Network Permission
 
 ## Tools
 - MVVM design architecture
-- Observer design paterns
+- Observer design patterns
 - Coroutines
-- Flow
 - StateFlow
 - Hilt
 - Navigation Components
